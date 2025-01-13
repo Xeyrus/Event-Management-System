@@ -1,0 +1,67 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  name: String!
+  email: String!
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
+  ORGANIZER
+  PARTICIPANT
+}
+
+type Event {
+  id: Int!
+  title: String!
+  description: String!
+  organizerId: Int!
+  participants: [Int]!
+  status: EventStatus
+}
+
+enum EventStatus {
+  ACTIVE
+  CANCELLED
+}
+
+type Query {
+  login(id: Int!, password: String!): String!
+  findAllUser: [User!]!
+  findAllEvent: [Event!]!
+  findEventByStatus(status: EventStatus!): [Event!]!
+  findEventsByUserId(userId: Float!): [Event!]!
+  findParticipantForEvent(eventId: Float!): [User!]!
+}
+
+type Mutation {
+  registerUser(user: CreateUserDto!): User!
+  createEvent(event: CreateEventDto!): Event!
+  cancelEvent(userId: Int!, eventId: Int!): String!
+  registerUserForEvent(userId: Int!, eventId: Int!): String!
+}
+
+input CreateUserDto {
+  id: Int!
+  name: String!
+  email: String!
+  password: String!
+  role: UserRole!
+}
+
+input CreateEventDto {
+  id: Int!
+  title: String!
+  description: String!
+  organizerId: Int!
+  participants: [Int]!
+  status: EventStatus
+}
+
+type Subscription {
+  cancelEventSubscription: String!
+}
